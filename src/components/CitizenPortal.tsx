@@ -10,6 +10,17 @@ interface CitizenPortalProps {
   onSubmissionSuccess: () => void;
 }
 
+{/* Updated Telegram Integration Button */}
+<a href="https://t.me/YOUR_BOT_USERNAME_HERE" 
+   target="_blank"
+   rel="noopener noreferrer"
+   className="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition-colors cursor-pointer border border-sky-400">
+  <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.53-1.39.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.36-.49.99-.74 3.88-1.69 6.47-2.8 7.77-3.32 3.66-1.47 4.42-1.73 4.92-1.74.11 0 .36.03.52.16.13.1.17.24.19.34z"/>
+  </svg>
+  <span>Connect via Telegram</span>
+</a>
+
 // Sample templates in multiple languages for easy testing
 const SAMPLE_TEMPLATES = [
   {
