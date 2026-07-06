@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   User, Phone, MapPin, Upload, Image as ImageIcon, Mic, 
-  Search, ArrowRight, CheckCircle2, AlertTriangle, Play, Square, Loader2, RefreshCw
+  Search, ArrowRight, CheckCircle2, AlertTriangle, Play, Square, Loader2, RefreshCw, MessageCircle, MessageSquare
 } from 'lucide-react';
 import { Region, Grievance } from '../types';
 import { INITIAL_REGIONS } from '../data/mockData';
@@ -310,6 +310,20 @@ export default function CitizenPortal({ onSubmissionSuccess }: CitizenPortalProp
         <p className="text-emerald-100 text-sm sm:text-base max-w-3xl leading-relaxed">
           Submit local development concerns (water shortages, broken roads, sewer leaks, power outages, and public safety issues). Your report will be instantly translated, categorized by AI, mapped geotag-wise, and prioritized in the Member of Parliament (MP) scoring system.
         </p>
+
+        {/* Quick Connect via Messaging Apps */}
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a href="whatsapp://send?phone=+919876543210&text=Hi,%20I%20want%20to%20raise%20a%20development%20grievance:" 
+             className="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition-colors cursor-pointer border border-emerald-400">
+            <MessageCircle className="h-4 w-4" />
+            <span>Connect via WhatsApp</span>
+          </a>
+          <a href="sms:+919876543210?body=Hi,%20I%20want%20to%20raise%20a%20development%20grievance:" 
+             className="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition-colors cursor-pointer border border-teal-500">
+            <MessageSquare className="h-4 w-4" />
+            <span>Send SMS Report</span>
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -343,7 +357,7 @@ export default function CitizenPortal({ onSubmissionSuccess }: CitizenPortalProp
               </div>
               <div>
                 <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
-                  Mobile Number (For Status SMS)
+                  Mobile Number (For WhatsApp / SMS Updates)
                 </label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
