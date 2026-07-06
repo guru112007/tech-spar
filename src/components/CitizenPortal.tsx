@@ -11,7 +11,7 @@ interface CitizenPortalProps {
 }
 
 {/* Updated Telegram Integration Button */}
-<a href="https://t.me/YOUR_BOT_USERNAME_HERE" 
+<a href="https://t.me/Citvoice_bot" 
    target="_blank"
    rel="noopener noreferrer"
    className="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition-colors cursor-pointer border border-sky-400">
