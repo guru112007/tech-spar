@@ -8,7 +8,7 @@ import { Grievance, PriorityWeights, Region, ThemeCluster, ProposedProject } fro
 import TelegramBot from 'node-telegram-bot-api';
 
 // Paste the token you copied from BotFather here (or put it in your .env file)
-const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || 8647744570:AAH1CvhWNZbx19tZPVJnPc000ZZsJsMBRVQ;
+const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "8647744570:AAH1CvhWNZbx19tZPVJnPc000ZZsJsMBRVQ";
 
 // Initialize the bot using long-polling (automatically listens for messages without needing ngrok!)
 const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
