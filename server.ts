@@ -5,6 +5,91 @@ import { INITIAL_REGIONS, INITIAL_GRIEVANCES, INITIAL_CLUSTERS, INITIAL_WEIGHTS,
 import { analyzeGrievanceWithAI, generateAIThemeSummary } from "./src/lib/gemini.ts";
 import { Grievance, PriorityWeights, Region, ThemeCluster, ProposedProject } from "./src/types.ts";
 
+import TelegramBot from 'node-telegram-bot-api';
+
+// Paste the token you copied from BotFather here (or put it in your .env file)
+const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "YOUR_BOT_FATHER_TOKEN_HERE";
+
+// Initialize the bot using long-polling (automatically listens for messages without needing ngrok!)
+const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
+
+console.log("[Telegram Bot] Bot service initiated successfully...");
+
+// Listen for incoming text messages from citizens
+bot.on('message', async (msg) => {
+    const chatId = msg.chat.id;
+    const msgText = msg.text;
+
+    // Ignore commands or empty messages
+    if (!msgText || msgText.startsWith('/')) {
+        if (msgText === '/start') {
+            bot.sendMessage(chatId, "Welcome to the Public Grievance Portal! Please describe your local infrastructure issue (roads, water, safety, power, sanitation) in your native language.");
+        }
+        return;
+    }
+
+    console.log(`[Telegram Bot] Received grievance from Chat ID ${chatId}: ${msgText}`);
+
+    try {
+        // Send a quick typing indicator to show the bot is thinking
+        bot.sendChatAction(chatId, 'typing');
+
+        // 1. Default coordinates for processing boundary logic
+        const lat = 28.6139;
+        const lng = 77.2090;
+        const regionId = findClosestRegion(lat, lng);
+
+        // 2. Pass the text message directly into your system's AI pipeline
+        const aiResult = await analyzeGrievanceWithAI(msgText, "Other", undefined, undefined);
+        const newId = `TG-${Math.floor(1000 + Math.random() * 9000)}`;
+
+        // 3. Construct the grievance object using your existing schema
+        const newGrievance = {
+            id: newId,
+            citizenName: msg.from?.first_name || "Telegram User",
+            citizenPhone: "Telegram Intake",
+            regionId,
+            title: aiResult.title,
+            description: aiResult.translatedDescription,
+            originalDescription: msgText,
+            language: aiResult.detectedLanguage,
+            category: aiResult.category,
+            urgency: aiResult.urgency,
+            status: 'Pending',
+            createdAt: new Date().toISOString(),
+            latitude: lat,
+            longitude: lng,
+            priorityScore: 0
+        };
+
+        // 4. Push to database registry array and recompute prioritization algorithms
+        serverGrievances.push(newGrievance);
+        recalculateAllScores();
+
+        console.log(`[Telegram Bot] Successfully ingested grievance: ${newId}`);
+
+        // 5. Reply to the citizen instantly with their Tracking ID and AI diagnosis
+        const replyMessage = 
+`✅ *Grievance Ingested Successfully!*
+
+*Tracking ID:* \`${newId}\`
+*AI Classification:* ${aiResult.category}
+*Detected Language:* ${aiResult.detectedLanguage}
+*Urgency Rating:* ${aiResult.urgency}
+
+*Translated Summary:* 
+"${aiResult.translatedDescription}"
+
+_Your issue has been logged into the prioritization queue._`;
+
+        bot.sendMessage(chatId, replyMessage, { parse_mode: 'Markdown' });
+
+    } catch (err) {
+        console.error("[Telegram Bot] Error processing message pipeline:", err);
+        bot.sendMessage(chatId, "Sorry, there was an issue processing your request. Please try again shortly.");
+    }
+});
+
 const app = express();
 const PORT = 3000;
 
