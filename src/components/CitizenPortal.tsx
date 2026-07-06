@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   User, Phone, MapPin, Upload, Image as ImageIcon, Mic, 
-  Search, ArrowRight, CheckCircle2, AlertTriangle, Play, Square, Loader2, RefreshCw
+  Search, ArrowRight, CheckCircle2, AlertTriangle, Square, Loader2, RefreshCw
 } from 'lucide-react';
 import { Region, Grievance } from '../types';
 import { INITIAL_REGIONS } from '../data/mockData';
@@ -10,16 +10,6 @@ interface CitizenPortalProps {
   onSubmissionSuccess: () => void;
 }
 
-{/* Updated Telegram Integration Button */}
-<a href="https://t.me/Citvoice_bot" 
-   target="_blank"
-   rel="noopener noreferrer"
-   className="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2 transition-colors cursor-pointer border border-sky-400">
-  <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.53-1.39.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.36-.49.99-.74 3.88-1.69 6.47-2.8 7.77-3.32 3.66-1.47 4.42-1.73 4.92-1.74.11 0 .36.03.52.16.13.1.17.24.19.34z"/>
-  </svg>
-  <span>Connect via Telegram</span>
-</a>
 
 // Sample templates in multiple languages for easy testing
 const SAMPLE_TEMPLATES = [
@@ -315,12 +305,25 @@ export default function CitizenPortal({ onSubmissionSuccess }: CitizenPortalProp
     <div className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="citizen-portal">
       {/* Intro Hero Section */}
       <div className="bg-gradient-to-r from-emerald-800 to-teal-700 text-white p-6 sm:p-8 rounded-2xl shadow-md mb-8">
-        <h1 className="font-display font-bold text-2xl sm:text-3xl tracking-tight mb-2">
-          Public Grievance Portal
-        </h1>
-        <p className="text-emerald-100 text-sm sm:text-base max-w-3xl leading-relaxed">
-          Submit local development concerns (water shortages, broken roads, sewer leaks, power outages, and public safety issues). Your report will be instantly translated, categorized by AI, mapped geotag-wise, and prioritized in the Member of Parliament (MP) scoring system.
-        </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="font-display font-bold text-2xl sm:text-3xl tracking-tight mb-2">
+              Public Grievance Portal
+            </h1>
+            <p className="text-emerald-100 text-sm sm:text-base max-w-3xl leading-relaxed">
+              Submit local development concerns (water shortages, broken roads, sewer leaks, power outages, and public safety issues). Your report will be instantly translated, categorized by AI, mapped geotag-wise, and prioritized in the Member of Parliament (MP) scoring system.
+            </p>
+          </div>
+          <a href="https://t.me/Citvoice_bot" 
+             target="_blank"
+             rel="noopener noreferrer"
+             className="shrink-0 bg-sky-500 hover:bg-sky-600 text-white px-4 py-3 rounded-xl text-sm font-semibold flex items-center space-x-2 transition-colors cursor-pointer border border-sky-400">
+            <svg className="h-5 w-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.53-1.39.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.36-.49.99-.74 3.88-1.69 6.47-2.8 7.77-3.32 3.66-1.47 4.42-1.73 4.92-1.74.11 0 .36.03.52.16.13.1.17.24.19.34z"/>
+            </svg>
+            <span>Connect via Telegram</span>
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
