@@ -44,7 +44,7 @@ bot.on('message', async (msg) => {
         const newId = `TG-${Math.floor(1000 + Math.random() * 9000)}`;
 
         // 3. Construct the grievance object using your existing schema
-        const newGrievance = {
+        const newGrievance: Grievance = {
             id: newId,
             citizenName: msg.from?.first_name || "Telegram User",
             citizenPhone: "Telegram Intake",
@@ -89,7 +89,6 @@ _Your issue has been logged into the prioritization queue._`;
         bot.sendMessage(chatId, "Sorry, there was an issue processing your request. Please try again shortly.");
     }
 });
-
 const app = express();
 const PORT = 3000;
 
@@ -289,12 +288,13 @@ app.post("/api/submissions", async (req, res) => {
     serverGrievances.push(newGrievance);
     
     // Attempt to automatically cluster into any matching theme cluster or create a new theme cluster
-    const matchingCluster = serverClusters.find(c => c.category === newGrievance.category && c.title.toLowerCase().includes(regionId));
+    const targetRegionName = serverRegions.find(r => r.id === regionId)?.name || 'Local Sector';
+    const regionNamePrefix = targetRegionName.split(' - ')[0].toLowerCase();
+    const matchingCluster = serverClusters.find(c => c.category === newGrievance.category && c.title.toLowerCase().includes(regionNamePrefix));
     if (matchingCluster) {
       matchingCluster.grievanceIds.push(newId);
     } else {
       // Create a new localized thematic group
-      const targetRegionName = serverRegions.find(r => r.id === regionId)?.name || 'Local Sector';
       const newClusterId = `cluster-${Math.floor(10 + Math.random() * 90)}`;
       serverClusters.push({
         id: newClusterId,
